@@ -31,8 +31,6 @@ post '/send' => sub {
                 data => {
                     title => "$title",
                     message => "$msg",
-                    score => 12345,
-                    is_update => JSON::true,
                 },
             }
         );
@@ -49,7 +47,7 @@ post '/send' => sub {
                 warn sprintf 'error: %s, reg_id: %s',
                     $result->error, $reg_id;
             }
-            
+
             if ($result->has_canonical_id) {
                 say sprintf 'reg_id %s is old! refreshed reg_id is %s',
                     $reg_id, $result->registration_id;
