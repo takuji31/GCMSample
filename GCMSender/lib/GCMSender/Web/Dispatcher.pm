@@ -21,6 +21,7 @@ get '/' => sub {
 
 post '/send' => sub {
     my ($c, ) = @_;
+    my $title = $c->req->param('title');
     my $msg = $c->req->param('message');
 
     if (defined $msg) {
@@ -28,6 +29,7 @@ post '/send' => sub {
             {
                 registration_ids => [$REGISTER_ID],
                 data => {
+                    title => "$title",
                     message => "$msg",
                     score => 12345,
                     is_update => JSON::true,

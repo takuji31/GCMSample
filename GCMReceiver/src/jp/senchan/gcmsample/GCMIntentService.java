@@ -33,18 +33,18 @@ public class GCMIntentService extends GCMBaseIntentService {
  
     @Override
     protected void onMessage(Context context, Intent intent) {
-        String str = intent.getStringExtra("message");
-        Log.w("message:", str);
-        sendMessage(str);
+        String title = intent.getStringExtra("title");
+        String message = intent.getStringExtra("message");
+        sendMessage(message);
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Intent touchIntent = new Intent(getApplicationContext(), MainActivity.class);
         PendingIntent pi = PendingIntent.getActivity(this, 0, touchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         builder.setSmallIcon(R.drawable.ic_launcher);
-        builder.setContentTitle("hoge");
-        builder.setContentText(str);
+        builder.setContentTitle(title);
+        builder.setContentText(message);
         builder.setContentIntent(pi);
-        builder.setTicker(str);
+        builder.setTicker(title);
         nm.notify(1, builder.getNotification());
     }
    
