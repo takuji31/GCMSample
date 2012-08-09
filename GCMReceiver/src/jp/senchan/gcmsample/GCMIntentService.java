@@ -1,7 +1,10 @@
 package jp.senchan.gcmsample;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
@@ -33,6 +36,16 @@ public class GCMIntentService extends GCMBaseIntentService {
         String str = intent.getStringExtra("message");
         Log.w("message:", str);
         sendMessage(str);
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Intent touchIntent = new Intent(getApplicationContext(), MainActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, touchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+        builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setContentTitle("hoge");
+        builder.setContentText(str);
+        builder.setContentIntent(pi);
+        builder.setTicker(str);
+        nm.notify(1, builder.getNotification());
     }
    
     private void sendMessage(String str) {

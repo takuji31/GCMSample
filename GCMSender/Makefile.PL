@@ -13,6 +13,9 @@ WriteMakefile(
         'Plack::Middleware::ReverseProxy' => '0.09',
         'Test::WWW::Mechanize::PSGI'      => '0',
         'Config::Pit'                     => '0.04',
+        'WWW::Google::Cloud::Messaging'   => '0.01',
+        'LWP::UserAgent'                  => '0',
+        'LWP::Protocol::https'            => '0',
     },
     MIN_PERL_VERSION => '5.008001',
     (-d 'xt' and $ENV{AUTOMATED_TESTING} || $ENV{RELEASE_TESTING}) ? (
