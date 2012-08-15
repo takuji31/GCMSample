@@ -52,6 +52,12 @@ public class MainActivity extends FragmentActivity {
 		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		nm.cancelAll();
 	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(mReceiver);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

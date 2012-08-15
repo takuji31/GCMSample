@@ -16,8 +16,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.google.android.gcm.GCMBaseIntentService;
 
 public class GCMIntentService extends GCMBaseIntentService {
@@ -29,15 +27,13 @@ public class GCMIntentService extends GCMBaseIntentService {
 	@Override
 	public void onRegistered(Context context, String registrationId) {
 		Log.w("registration id:", registrationId);
-		sendMessage("id:" + registrationId);
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet get = new HttpGet("http://dev.tkch.in/register/"
 				+ registrationId);
 		try {
 			HttpResponse res = client.execute(get);
 			if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				Toast.makeText(getApplicationContext(), "Push通知を登録しました",
-						Toast.LENGTH_SHORT).show();
+				sendMessage("Push通知を登録しました");
 				return;
 			}
 		} catch (ClientProtocolException e) {
@@ -47,27 +43,24 @@ public class GCMIntentService extends GCMBaseIntentService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Toast.makeText(getApplicationContext(), "Push通知の登録に失敗しました",
-				Toast.LENGTH_SHORT).show();
+		sendMessage("Push通知の登録に失敗しました");
 	}
 
 	@Override
 	protected void onUnregistered(Context context, String registrationId) {
-		Toast.makeText(getApplicationContext(), "Push通知の登録を解除しました",
-				Toast.LENGTH_SHORT).show();
+		sendMessage("Push通知の登録を解除しました");
 	}
 
 	@Override
 	public void onError(Context context, String errorId) {
-		sendMessage("err:" + errorId);
+		sendMessage("Push通知の登録に失敗しました");
 	}
 
 	@Override
 	protected void onMessage(Context context, Intent intent) {
 		String title = intent.getStringExtra("title");
 		String message = intent.getStringExtra("message");
-		sendMessage(message);
-		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+ 		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		Intent touchIntent = new Intent(getApplicationContext(),
 				MainActivity.class);
 		PendingIntent pi = PendingIntent.getActivity(this, 0, touchIntent,
