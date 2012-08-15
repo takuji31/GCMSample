@@ -57,4 +57,10 @@ post '/send' => sub {
     $c->redirect('/');
 };
 
+get '/register/:id' => sub {
+    my ($c, $args) = @_;
+    $REGISTER_ID = $args->{id};
+    $c->render_json({result => 'OK'});
+};
+
 1;
