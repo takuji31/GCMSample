@@ -9,7 +9,7 @@ use Config::Pit;
 use JSON;
 use WWW::Google::Cloud::Messaging;
 
-my $REGISTER_ID = "APA91bEsBEGJe_qs0ukK0EckRGW54hAf5LciXOgxwjeZRQovnl75VhwFtCsB-egtsox0XqJCXxBTMwHanWMdIp26EqHEBJeExT98CCX4BUb1fchTLTBXWx4DGeg13ArkxGCq3mvlFnB3US4fI-1ybcst3Aps1Kwp0g";
+my $REGISTER_ID = "";
 
 my $CONFIG = pit_get('gcmsample', require => {sender_id => 'GCM Sender id', api_key => 'Server API key'});
 my $gcm = WWW::Google::Cloud::Messaging->new(api_key => $CONFIG->{api_key});
