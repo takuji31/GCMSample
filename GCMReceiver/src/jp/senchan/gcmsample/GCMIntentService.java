@@ -2,6 +2,8 @@ package jp.senchan.gcmsample;
 
 import java.io.IOException;
 
+import jp.senchan.lib.app.ToastService;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
@@ -16,6 +18,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gcm.GCMBaseIntentService;
 
 public class GCMIntentService extends GCMBaseIntentService {
@@ -28,7 +32,9 @@ public class GCMIntentService extends GCMBaseIntentService {
 	public void onRegistered(Context context, String registrationId) {
 		Log.w("registration id:", registrationId);
 		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet get = new HttpGet("http://dev.tkch.in/register/"
+		//TODO SET your host and remove throw
+		throw new RuntimeException("Please set your GCMSender host");
+ 		HttpGet get = new HttpGet("http://yourhost/register/"
 				+ registrationId);
 		try {
 			HttpResponse res = client.execute(get);
@@ -76,9 +82,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 	}
 
 	private void sendMessage(String str) {
-		Intent broadcastIntent = new Intent();
-		broadcastIntent.putExtra("message", str);
-		broadcastIntent.setAction(GCMSample.BROADCAST_ACTION);
-		getBaseContext().sendBroadcast(broadcastIntent);
+		ToastService.showToast(getApplicationContext(), str, Toast.LENGTH_SHORT);
 	}
 }

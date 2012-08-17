@@ -41,5 +41,7 @@
             </intent-filter>
         </receiver>
         <service android:name=".GCMIntentService" />
+        <service android:name="jp.senchan.lib.app.ToastService" >
+        </service>
     </application>
 </manifest>

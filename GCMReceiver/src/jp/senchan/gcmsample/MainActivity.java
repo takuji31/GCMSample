@@ -18,9 +18,6 @@ import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
 
-	private IntentFilter mIntentFilter;
-	private MyBroadcastReceiver mReceiver;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,38 +40,15 @@ public class MainActivity extends FragmentActivity {
 			}
 		});
 
-	    mReceiver = new MyBroadcastReceiver();
-	    mIntentFilter = new IntentFilter();
-	    mIntentFilter.addAction(GCMSample.BROADCAST_ACTION);
-	    registerReceiver(mReceiver, mIntentFilter);
-		
 		// Notificationを消す
 		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		nm.cancelAll();
 	}
 	
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		unregisterReceiver(mReceiver);
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 
-	public class MyBroadcastReceiver extends BroadcastReceiver {
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			Bundle bundle = intent.getExtras();
-			String message = bundle.getString("message");
-
-			Toast.makeText(context, message, Toast.LENGTH_LONG)
-					.show();
-		}
-
-	}
 }
